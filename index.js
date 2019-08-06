@@ -50,13 +50,13 @@ ServerPortRouter.route('/').get(function (req, res) {
 
 });
 
+app.use('/serverport', ServerPortRouter);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Put all API endpoints under '/api'
 
 
-app.use('/serverport', ServerPortRouter);
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
