@@ -14,7 +14,7 @@ client.connect(err => {
 });
 
 
-ServerPortRouter.route('/add').post(function (req, res) {
+ServerPortRouter.route('/serverport/add').post(function (req, res) {
   /*const serverport = new ServerPort(req.body);
   serverport.save()
     .then(serverport => {
@@ -23,16 +23,20 @@ ServerPortRouter.route('/add').post(function (req, res) {
     .catch(err => {
     res.status(400).send("unable to save to database");
     });*/
-    collection.insertOne(req.body,(err,res)=>{
-    	if (err) throw err;
-        console.log("1 document inserted");
-    })
+    client.connect(err => {
+  		const collection = client.db("test").collection("servers");
+  		collection.insertOne(req.body,(err,res)=>{
+    		if (err) throw err;
+        	console.log("1 document inserted");
+    	})
+	});
+    
 
 
 
 });
 
-ServerPortRouter.route('/').get(function (req, res) {
+ServerPortRouter.route('/serverport').get(function (req, res) {
     /*ServerPort.find(function (err, serverports){
     if(err){
       console.log(err);
@@ -42,15 +46,24 @@ ServerPortRouter.route('/').get(function (req, res) {
     }
   });*/
 	collection.find({}).toArray(function(err, result) {
-    	if (err) throw err;
+    	if (err) {throw err}
+    	else{
     	console.log(result);
-    	res.json(result)
+    	res.json(result)}
   	});
+  	client.connect(err => {
+  		const collection = client.db("test").collection("servers");
+  		collection.find({}).toArray(function(err, result) {
+    	if (err) {throw err}
+    	else{
+    	console.log(result);
+    	res.json(result)}
+  	});
+	});
 
 
 });
 
-app.use('/serverport', ServerPortRouter);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -72,3 +85,4 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log(`Password generator listening on ${port}`);
+
