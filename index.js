@@ -14,7 +14,7 @@ client.connect(err => {
 });
 
 
-ServerPortRouter.route('/serverport/add').post(function (req, res) {
+ServerPortRouter.route('/add').post(function (req, res) {
   /*const serverport = new ServerPort(req.body);
   serverport.save()
     .then(serverport => {
@@ -36,7 +36,7 @@ ServerPortRouter.route('/serverport/add').post(function (req, res) {
 
 });
 
-ServerPortRouter.route('/serverport').get(function (req, res) {
+ServerPortRouter.route('/').get(function (req, res) {
     /*ServerPort.find(function (err, serverports){
     if(err){
       console.log(err);
@@ -64,6 +64,7 @@ ServerPortRouter.route('/serverport').get(function (req, res) {
 
 });
 
+app.use('/serverport', ServerPortRouter);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
