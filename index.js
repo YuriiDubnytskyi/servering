@@ -14,7 +14,7 @@ client.connect(err => {
 });
 
 
-ServerPortRouter.route('/serverport/add').post(function (req, res) {
+ServerPortRouter.route('/add').post(function (req, res) {
   /*const serverport = new ServerPort(req.body);
   serverport.save()
     .then(serverport => {
@@ -32,7 +32,7 @@ ServerPortRouter.route('/serverport/add').post(function (req, res) {
 
 });
 
-ServerPortRouter.route('/serverport').get(function (req, res) {
+ServerPortRouter.route('/').get(function (req, res) {
     /*ServerPort.find(function (err, serverports){
     if(err){
       console.log(err);
@@ -56,6 +56,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // Put all API endpoints under '/api'
 
 
+app.use('/serverport', ServerPortRouter);
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
